@@ -1,0 +1,57 @@
+body{
+    background-color: black;
+}
+
+
+
+::-webkit-scrollbar{
+    display: none;
+}
+
+.arrowSc{
+    font-size: 60px;
+    color: white;
+    position: absolute;
+    right: 0;
+    display: none;
+    opacity: 0.4;
+    width: fit-content;
+    cursor: pointer;
+}
+.arrowScRight{
+    right: -1%;
+}
+.arrowScLeft{
+    left: 0%;
+    z-index: 100;
+}
+.arrowSc:hover{
+    opacity: 1;
+}
+
+.specificRow:hover .arrowSc{
+    display: block;
+}
+.rowTitle{
+    position: absolute;
+    text-align: center;
+    color: white;
+    display: none;
+    z-index: 10;
+}
+
+
+.rowDiv:hover .rowImg{
+    opacity: 0.5;
+    
+}
+
+.rowDiv:hover .rowTitle{
+    display: block;
+}
+
+input{
+    border: none;
+    background: rgba(0, 0, 0, 0.315);
+    outline: none;
+}
