@@ -6,10 +6,9 @@ import { Link, useLocation } from "react-router-dom";
 import { ContextProvide } from "../ContextProvider";
 
 export default function Navn() {
-  const choseF = useContext(ContextProvide);
+  const { user, logOut } = useContext(ContextProvide);
   let acc = localStorage.getItem("account");
 
-  console.log(acc, "this is acc");
   return (
     <div
       className="d-flex justify-content-between container-fluid p-2"
@@ -22,7 +21,7 @@ export default function Navn() {
         </h2>
       </Link>
       <div className="d-flex justify-content-around" style={{ width: "15%" }}>
-        {acc ? (
+        {user ? (
           <div
             className="d-flex justify-content-between"
             style={{ width: 180 }}
@@ -32,9 +31,7 @@ export default function Navn() {
             </Link>
             <Link
               onClick={() => {
-                localStorage.removeItem("account");
-                localStorage.removeItem("chosen");
-                window.location.reload();
+                logOut();
               }}
               to={"/"}
             >

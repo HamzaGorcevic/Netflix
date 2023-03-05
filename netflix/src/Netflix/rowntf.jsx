@@ -12,7 +12,6 @@ import style from "./netflix.module.css";
 
 export default function Row({ title, req, idRow }) {
   const [movie, setmovie] = useState([]);
-  console.log(JSON.parse(localStorage.getItem("chosen")));
 
   useEffect(() => {
     axios.get(req).then((response) => {

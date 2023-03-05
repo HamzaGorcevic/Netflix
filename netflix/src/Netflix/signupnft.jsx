@@ -1,6 +1,20 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useContext, useState } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { ContextProvide } from "../ContextProvider";
 export default function SignInNetflix() {
+  const { logIn } = useContext(ContextProvide);
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const HandleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await logIn(email, password);
+      navigate("/");
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
   return (
     <div
       className="d-flex justify-content-center align-items-center"
@@ -24,6 +38,9 @@ export default function SignInNetflix() {
         <div className="d-flex flex-column w-75 mt-2">
           <p className="text-secondary mb-0">Email or phone number</p>
           <input
+            onChange={(e) => {
+              setEmail(e.target.value);
+            }}
             placeholder="Email"
             className="text-white w-100"
             style={{
@@ -37,6 +54,9 @@ export default function SignInNetflix() {
         <div className="d-flex flex-column w-75 mt-2">
           <p className="text-secondary mb-0">Password</p>
           <input
+            onChange={(e) => {
+              setPassword(e.target.value);
+            }}
             placeholder="Password"
             className="text-white w-100 "
             style={{
@@ -47,7 +67,9 @@ export default function SignInNetflix() {
             type="password"
           />
         </div>
-        <button className="btn btn-danger w-75 mt-5">Sign in</button>
+        <button onClick={HandleSubmit} className="btn btn-danger w-75 mt-5">
+          Sign in
+        </button>
         <div className=" mt-3 w-75 d-flex text-secondary justify-content-between">
           <div className="d-flex w-50 align-items-center">
             <input

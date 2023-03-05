@@ -4,12 +4,21 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { ContextProvide } from "../ContextProvider";
+export default function SignUpN() {
+  const { signUp } = useContext(ContextProvide);
 
-export default function SignUp() {
-  const choseF = useContext(ContextProvide);
-  const [account, setAccount] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const HandleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await signUp(email, password);
+      navigate("/");
+    } catch (error) {
+      console.log("error", error);
+    }
+  };
   const navigate = useNavigate();
-  const app = [{ title: "hamza" }];
   return (
     <div
       className="d-flex justify-content-center align-items-center"
@@ -34,7 +43,7 @@ export default function SignUp() {
           <p className="text-secondary mb-0">Email or phone number</p>
           <input
             onChange={(name) => {
-              setAccount(name.target.value);
+              setEmail(name.target.value);
             }}
             placeholder="Email"
             className="text-white w-100"
@@ -49,6 +58,9 @@ export default function SignUp() {
         <div className="d-flex flex-column w-75 mt-2">
           <p className="text-secondary mb-0">password</p>
           <input
+            onChange={(pass) => {
+              setPassword(pass.target.value);
+            }}
             placeholder="Password"
             className="text-white w-100 "
             style={{
@@ -59,18 +71,7 @@ export default function SignUp() {
             type="password"
           />
         </div>
-        <button
-          onClick={() => {
-            localStorage.setItem("account", account);
-            localStorage.setItem("chosen", JSON.stringify(app));
-
-            {
-              localStorage.getItem("account").length > 1 && navigate("/");
-              window.location.reload();
-            }
-          }}
-          className="btn btn-danger w-75 mt-5"
-        >
+        <button onClick={HandleSubmit} className="btn btn-danger w-75 mt-5">
           Sign up
         </button>
 
