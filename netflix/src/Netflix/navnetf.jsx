@@ -7,7 +7,6 @@ import { ContextProvide } from "../ContextProvider";
 
 export default function Navn() {
   const { user, logOut } = useContext(ContextProvide);
-  let acc = localStorage.getItem("account");
 
   return (
     <div
@@ -15,7 +14,6 @@ export default function Navn() {
       style={{ position: "absolute", zIndex: "10" }}
     >
       <Link to={"/"}>
-        {" "}
         <h2 className="font-weight-bold" style={{ color: "red" }}>
           NETFLIX
         </h2>

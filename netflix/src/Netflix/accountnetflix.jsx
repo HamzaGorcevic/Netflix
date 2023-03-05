@@ -1,8 +1,9 @@
 import { useContext, useEffect, useState } from "react";
 import { ContextProvide } from "../ContextProvider";
-import { Navigate } from "react-router-dom";
 import { doc, onSnapshot, updateDoc } from "firebase/firestore";
 import { db } from "../firebase";
+import "./netflix.css";
+import style from "./netflix.module.css";
 
 export default function Accout() {
   const { user } = useContext(ContextProvide);
@@ -25,43 +26,77 @@ export default function Accout() {
       console.log(error);
     }
   };
+  function MoveRight() {
+    var right = document.querySelector(`.moviesMain`);
+    right.scrollLeft = right.scrollLeft + 500;
+  }
+  function MoveLeft() {
+    var right = document.querySelector(`.moviesMain`);
+    right.scrollLeft = right.scrollLeft - 500;
+  }
   return (
     <div
-      className="d-flex bg-dark align-items-center justify-content-center flex-wrap"
-      style={{ height: "99vh", background: "white" }}
+      className="d-flex  align-items-center justify-content-center flex-column p-5"
+      style={{ height: "99vh", background: "rgb(35, 35, 35)" }}
     >
+      <div className="accountTitle w-100 ">
+        <h1>PLAY LIST</h1>
+        <p>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Quo alias
+          molestias doloribus cupiditate quam molestiae natus explicabo
+          obcaecati neque, veritatis ducimus repellat inventore! Inventore ex,
+          tempore debitis ad doloremque impedit molestiae, aspernatur nemo
+          recusandae sit nulla facilis illo sed quo dolores blanditiis
+          consequatur cum labore provident pariatur tempora cupiditate delectus
+          alias. Veritatis accusamus repellendus, repudiandae
+        </p>
+      </div>
       <div
+        className="moviesMain"
         style={{
-          position: "absolute",
-          top: "10%",
-          left: "6%",
-          color: "white",
+          scrollBehavior: "smooth",
+          overflow: "auto",
         }}
       >
-        <h2 className="text-danger">Welcome {user.email}</h2>
+        <i
+          style={{ display: "block" }}
+          onClick={MoveLeft}
+          className={`${style.arrowSc} ${style.arrowScLeft} bi bi-arrow-left-circle-fill`}
+        ></i>
+        {movies.map((el) => {
+          return (
+            <div className="movieChosen">
+              <div className="movieContent">
+                <h3>{el.title}</h3>
+                <div className="movieIcons">
+                  <i className="fa-regular fa-circle-play"></i>
+                  <i className="fa-solid fa-heart"></i>
+                  <i
+                    onClick={() => {
+                      deleteShow(el.id);
+                    }}
+                    className="fa-solid fa-trash"
+                  ></i>
+                  <i className="fa-sharp fa-solid fa-share-nodes"></i>
+                </div>
+                <div className="movieLine"></div>
+                <div className="movieInfo">
+                  <p>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                    Eius qui fuga perspiciatis. Doloribus, facere.
+                  </p>
+                </div>
+              </div>
+              <img src={`https://image.tmdb.org/t/p/w500/${el?.img}`} alt="" />
+            </div>
+          );
+        })}
+        <i
+          style={{ display: "block" }}
+          onClick={MoveRight}
+          className={`${style.arrowSc} ${style.arrowScRight} bi bi-arrow-right-circle-fill`}
+        ></i>
       </div>
-      {movies.map((el) => {
-        {
-        }
-        return (
-          <div
-            style={{
-              width: 500,
-              height: 500,
-            }}
-          >
-            <h3>{el.title}</h3>
-            <h3
-              onClick={() => {
-                deleteShow(el.id);
-              }}
-            >
-              Remove
-            </h3>
-            <img src={`https://image.tmdb.org/t/p/w500/${el?.img}`} alt="" />
-          </div>
-        );
-      })}
     </div>
   );
 }
